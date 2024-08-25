@@ -1,0 +1,100 @@
+.cs-content {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .cs-box {
+    padding: 32px;
+    height: 600px;
+    width: 400px;
+    background-color: #2D659B;
+  }
+  
+  .box-1 {
+    margin-top: 30px;
+  }
+  
+  .card {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .card .card-1 {
+    padding: 10px;
+    width: 250px;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+  }
+  
+  .cs-boxlogin {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /*# sourceMappingURL=pol.css.map */
+  
+  /* กานต์ */
+  
+  .container {
+    display: flex;
+    flex-direction: column; /* Stack text elements vertically */
+    align-items: center; /* Center-align text elements horizontally */
+    width: 100%; /* Ensure the container takes full width of the parent */
+  }
+  
+  .text {
+    font-size: 30px; /* Size of the text */
+    color: #ffffff;
+  }
+  
+  .text-name {
+    font-size: 24px; /* Size of the text */
+    color: #ffffff;
+    margin-top: 20px; /* Space between the text elements */
+    padding-right: 200px;
+    margin-bottom: -20px;
+  }
+
+  .text-name-0 {
+    font-size: 24px; /* Size of the text */
+    color: #ffffff;
+    margin-top: 20px; /* Space between the text elements */
+    padding-right: 200px;
+    margin-bottom: -20px;
+  }
+
+  .text-name-1 {
+    font-size: 24px; /* Size of the text */
+    color: #ffffff;
+    margin-top: 20px; /* Space between the text elements */
+    padding-right: 230px;
+    margin-bottom: -20px;
+  }
+  
+  .input {
+    font-size: 24px; /* Size of the text */
+    background-color: #ffffff;
+    margin-top: 20px; /* Adjust as needed */
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .btn {
+    background-color: #050505;
+    border-radius: 20px;
+  }
+  
+  .dropdown{
+    background-color: #ffffff;
+    margin-top: 20px; /* Adjust as needed */
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  
+  
