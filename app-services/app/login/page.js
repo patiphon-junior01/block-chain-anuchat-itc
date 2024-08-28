@@ -18,7 +18,6 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: "20px",
     "& .MuiInputBase-root": {
       background: "rgb(232, 241, 250)",
       color: "#000",  // Text color
@@ -74,9 +73,9 @@ export default function Page() {
           </div>
 
           <form className="mt-2 " ref={form} action={handleFunctionFrom}>
-            <TextField required id="outlined-basic" label="ชื่อผู้ใช้งาน" variant="outlined" name="username" className={classes.root}
+            <TextField required id="outlined-basic" label="ชื่อผู้ใช้งาน" variant="outlined" name="username" className={`${classes.root} w-full mt-5`}
             />
-            <TextField required id="outlined-basic" label="รหัสผ่าน" variant="outlined" name="password" type="password" className={classes.root} />
+            <TextField required id="outlined-basic" label="รหัสผ่าน" variant="outlined" name="password" type="password" className={`${classes.root} w-full mt-5`} />
             <Button variant="contained" type="submit" className="bg-white w-full mt-10 text-black p-3 rounded-xl hover:text-white" disabled={loadingSub}>เข้าสู่ระบบ</Button>
             <Button
               onClick={() => { route.push("/register") }}
