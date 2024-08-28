@@ -2,11 +2,9 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Button from '@mui/material/Button';
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 // component import
@@ -16,7 +14,7 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: "20px",
+    marginTop: "0px",
     "& .MuiInputBase-root": {
       background: "rgb(232, 241, 250)",
       color: "#000",  // Text color
@@ -38,10 +36,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function Page() {
   const classes = useStyles();
   const form = useRef(null);
   const route = useRouter();
+
+  const handleFunctionFrom = async (formData) => {
+    console.log(formData.get("name-wallet")) // get data
+    route.push("/dashboard/wallets") // after success
+  }
 
 
   return (
@@ -50,27 +53,27 @@ export default function SignUp() {
       <div className="container-is-main">
         <div className="py-10 px-4">
           <div className="flex justify-between items-center ">
-            <Avatar sx={{ bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
+            <Avatar onClick={() => { route.push("/dashboard/wallets") }}>
+              P
             </Avatar>
           </div>
           <div className="flex justify-center mt-3">
             <Typography className="text-white" component="h1" variant="h5">
-              สมัครสมาชิก
+              สร้างกระเป๋า
             </Typography>
           </div>
 
-          <form className="mt-2 " ref={form}>
-            <TextField required id="outlined-basic" label="ชื่อ" variant="outlined" name="firstname" className={classes.root}
-            />
-            <TextField required id="outlined-basic" label="นามสกุล" variant="outlined" name="lastname" className={classes.root} />
-            <TextField required id="outlined-basic" label="ชื่อผู้ใช้งาน" variant="outlined" name="username" className={classes.root}
-            />
-            <TextField type="password" required id="outlined-basic" label="รหัสผ่าน" variant="outlined" name="password" className={classes.root} />
-            <Button type="submit" variant="contained" className="bg-white w-full mt-10 text-black p-3 rounded-xl hover:text-white">สมัครสมาชิก</Button>
+          <form className="mt-2 " ref={form} action={handleFunctionFrom}>
+            <div>
+              <label htmlFor="name-wallet" className="text-white mb-0 text-lg">ชื่อกระเป๋า</label>
+              <TextField required variant="outlined" id="name-wallet" name="name-wallet" placeholder="ชื่อกระเป๋า eg. กระเป๋าฮานี้ละ" className={classes.root}
+              />
+            </div>
+            <Button variant="contained" type="submit" className="bg-black w-full mt-10 text-white p-3 rounded-xl hover:text-black hover:bg-white">สร้างกระเป๋า</Button>
             <Button
-              onClick={() => { route.push("/login") }}
-              variant="contained" className="bg-white  mt-4 text-black p-1 px-4 rounded-xl hover:text-white">{"<-"} เข้าสู่ระบบ</Button>
+              onClick={() => { route.back() }}
+              size="small"
+              variant="text" className="bg-black  mt-4 text-white p-0 px-3 rounded-xl hover:text-black hover:bg-white">{"<-"} BACK</Button>
           </form>
         </div>
       </div>

@@ -1,0 +1,77 @@
+.icon-das {
+  display: inline;
+  background: #fff;
+  padding: 10px;
+  min-height: 75px;
+  min-width: 75px;
+  max-height: 75px;
+  max-width: 75px;
+  border-radius: 50%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-selected {
+  user-select: none;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+
+.menu-selected:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+.no-select {
+  user-select: none;
+}
+
+.cursor-is {
+  cursor: pointer;
+}
+
+.button-no-bg {
+  border: 0px;
+  background: transparent;
+}
+
+.bottom-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  z-index: 50;
+  transform: translateX(-50%);
+}
+.bottom-menu .menu-selected-v2 {
+  user-select: none;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all 0.3s ease;
+}
+.bottom-menu .menu-selected:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+.bottom-menu .icon-das-v2 {
+  border: 1px solid #000;
+  display: inline;
+  background: #fff;
+  padding: 10px;
+  min-height: 45px;
+  min-width: 45px;
+  max-height: 45px;
+  max-width: 45px;
+  border-radius: 50%;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*# sourceMappingURL=style.css.map */
