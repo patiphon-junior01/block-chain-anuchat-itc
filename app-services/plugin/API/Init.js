@@ -6,8 +6,8 @@ dotenv.config();
 // "http://localhost:3005"
 const Axios = axios.create({
   baseURL:
-    process.env.BASEURL ?? "https://api-itcmcoin-dev.product-services.com",
+    process.env.BASEURL,
 });
-Axios.defaults.timeout = 2500;
+Axios.defaults.timeout = 25000;
 
 export default Axios;

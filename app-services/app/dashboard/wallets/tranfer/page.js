@@ -9,6 +9,8 @@ import { useSearchParams } from 'next/navigation'
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { Button } from "@mui/material";
+import API from "@/plugin/API/API";
+import { myWallet } from "@/plugin/API/route/getExample"
 
 // component import
 import LoadingPage from "@/components/loading/loading"
@@ -72,17 +74,32 @@ export default function Page() {
 
   // state data
   const [Wallet, setWallet] = useState(1);
+  const [WalletArr, setWalletArr] = useState([]);
 
   const handleChange = (event) => {
     setWallet(event.target.value);
   };
 
   useEffect(() => {
+    fetchWalletData()
     const walletId = searchParams.get('walletId')
     if (walletId) {
       setWallet(walletId) // set Default data
     }
   }, [])
+
+  const fetchWalletData = async () => {
+    try {
+      const result = await myWallet();
+      console.log(result)
+      if (result.status) {
+        setWalletArr(result?.response.wallet);
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+    }
+  };
 
   const handleFunctionFrom = async (formData) => {
     console.log(formData.get("name-wallet")) // get data
@@ -117,9 +134,11 @@ export default function Page() {
                   onChange={handleChange}
                   name="name-wallet"
                 >
-                  <MenuItem value={1}>ชื่อกระเป๋า 1</MenuItem>
-                  <MenuItem value={2}>ชื่อกระเป๋า 2</MenuItem>
-                  <MenuItem value={3}>ชื่อกระเป๋า 3</MenuItem>
+                  {WalletArr.map((row, index) => {
+                    return (
+                      <MenuItem value={row?.id_wallet} key={index}>{row?.name_wallet}</MenuItem>
+                    )
+                  })}
                 </Select>
               </div>
             </div>
