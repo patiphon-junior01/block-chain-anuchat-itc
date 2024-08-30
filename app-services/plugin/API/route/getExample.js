@@ -27,7 +27,7 @@ const transfer = async (params) => {
   console.log(ck?.value); // token from cookie for verify
 
   try {
-    const response = await Axios.put("/api/wallet/transfer", {
+    const response = await Axios.post("/api/wallet/transfer", {
       params,
       headers: {
         Authorization: `Bearer ${ck?.value}`,
