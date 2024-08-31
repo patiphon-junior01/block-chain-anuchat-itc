@@ -3,20 +3,22 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { createWallet } from "@/plugin/API/route/createWallet";
 
 // component import
-import LoadingPage from "@/components/loading/loading"
+import LoadingPage from "@/components/loading/loading";
 
-import { makeStyles } from '@mui/styles';
+import { makeStyles } from "@mui/styles";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     "& .MuiInputBase-root": {
       background: "rgb(232, 241, 250)",
-      color: "#000",  // Text color
+      color: "#000", // Text color
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
@@ -39,12 +41,36 @@ export default function Page() {
   const classes = useStyles();
   const form = useRef(null);
   const route = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleFunctionFrom = async (formData) => {
-    console.log(formData.get("name-wallet")) // get data
-    route.push("/dashboard/wallets") // after success
-  }
+    try {
+      setLoading(true);
+      let data = JSON.stringify({
+        nameWallet: formData.get("name-wallet"),
+      });
+      const send = await createWallet(data);
+      console.log(send);
+      if (send.status) {
+        alert("สำเร็จ");
+        setTimeout(() => {
+          setLoading(false);
+          route.push("/dashboard/wallets"); // after success
+        }, 2000);
+      }
 
+      setTimeout(() => {
+        alert(send?.response?.message ?? "Error Create Wallet");
+        setLoading(false);
+      }, 2000);
+    } catch (err) {
+      console.error(err);
+      setTimeout(() => {
+        alert("Inernal Error");
+        setLoading(false);
+      }, 2000);
+    }
+  };
 
   return (
     <div>
@@ -52,7 +78,11 @@ export default function Page() {
       <div className="container-is-main">
         <div className="py-10 px-4">
           <div className="flex justify-between items-center ">
-            <Avatar onClick={() => { route.push("/dashboard/wallets") }}>
+            <Avatar
+              onClick={() => {
+                route.push("/dashboard/wallets");
+              }}
+            >
               P
             </Avatar>
           </div>
@@ -64,15 +94,36 @@ export default function Page() {
 
           <form className="mt-2 " ref={form} action={handleFunctionFrom}>
             <div>
-              <label htmlFor="name-wallet" className="text-white mb-0 text-lg">ชื่อกระเป๋า</label>
-              <TextField required variant="outlined" id="name-wallet" name="name-wallet" placeholder="ชื่อกระเป๋า eg. กระเป๋าฮานี้ละ" className={`${classes.root} w-full mt-0`}
+              <label htmlFor="name-wallet" className="text-white mb-0 text-lg">
+                ชื่อกระเป๋า
+              </label>
+              <TextField
+                required
+                variant="outlined"
+                id="name-wallet"
+                name="name-wallet"
+                placeholder="ชื่อกระเป๋า eg. กระเป๋าฮานี้ละ"
+                className={`${classes.root} w-full mt-0`}
               />
             </div>
-            <Button variant="contained" type="submit" className="bg-black w-full mt-10 text-white p-3 rounded-xl hover:text-black hover:bg-white">สร้างกระเป๋า</Button>
             <Button
-              onClick={() => { route.back() }}
+              variant="contained"
+              type="submit"
+              disabled={loading}
+              className="bg-black w-full mt-10 text-white p-3 rounded-xl hover:text-black hover:bg-white"
+            >
+              {loading ? "กำลังสร้างกระเป๋า..." : "สร้างกระเป๋า"}
+            </Button>
+            <Button
+              onClick={() => {
+                route.back();
+              }}
               size="small"
-              variant="text" className="bg-black  mt-4 text-white p-0 px-3 rounded-xl hover:text-black hover:bg-white">{"<-"} BACK</Button>
+              variant="text"
+              className="bg-black  mt-4 text-white p-0 px-3 rounded-xl hover:text-black hover:bg-white"
+            >
+              {"<-"} BACK
+            </Button>
           </form>
         </div>
       </div>

@@ -6,10 +6,15 @@ import { useEffect } from "react";
 
 const Page = () => {
   const animationLoading = useRef(null);
+
   useEffect(() => {
-    setTimeout(() => {
-      animationLoading.current?.classList.add("active");
-    }, 2000);
+    try {
+      setTimeout(() => {
+        animationLoading.current?.classList.add("active");
+      });
+    } catch (error) {
+      console.error("An error occurred while adding the class:", error);
+    }
   }, []);
 
   return (
