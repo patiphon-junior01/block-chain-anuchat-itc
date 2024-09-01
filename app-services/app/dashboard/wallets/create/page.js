@@ -14,7 +14,6 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: "0px",
     "& .MuiInputBase-root": {
       background: "rgb(232, 241, 250)",
       color: "#000",  // Text color
@@ -66,7 +65,7 @@ export default function Page() {
           <form className="mt-2 " ref={form} action={handleFunctionFrom}>
             <div>
               <label htmlFor="name-wallet" className="text-white mb-0 text-lg">ชื่อกระเป๋า</label>
-              <TextField required variant="outlined" id="name-wallet" name="name-wallet" placeholder="ชื่อกระเป๋า eg. กระเป๋าฮานี้ละ" className={classes.root}
+              <TextField required variant="outlined" id="name-wallet" name="name-wallet" placeholder="ชื่อกระเป๋า eg. กระเป๋าฮานี้ละ" className={`${classes.root} w-full mt-0`}
               />
             </div>
             <Button variant="contained" type="submit" className="bg-black w-full mt-10 text-white p-3 rounded-xl hover:text-black hover:bg-white">สร้างกระเป๋า</Button>

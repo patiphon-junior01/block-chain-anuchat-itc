@@ -6,15 +6,23 @@ import { useRouter } from "next/navigation";
 import CreateNewFolderIcon from '@mui/icons-material/CreateNewFolder';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 // component import
 import LoadingPage from "@/components/loading/loading"
+
+import { Logout } from "@/controller/auth/index"
 
 export default function Page() {
   const route = useRouter();
 
   const handleFunctionFrom = async (formData) => {
     console.log(formData.get("username")) // get data
+  }
+
+  const LogoutHandle = async () => {
+    await Logout();
+    route.push("/login")
   }
 
   return (
@@ -26,6 +34,7 @@ export default function Page() {
             <Avatar onClick={() => { route.push("/dashboard") }}>
               P
             </Avatar>
+            <p className="no-select cursor-is text-white hover:underline" onClick={() => { LogoutHandle() }}>Logout <LogoutIcon /></p>
           </div>
           <div className="w-full bg-white px-8 py-6 rounded-xl mb-10">
             <p className="mb-3"><span className="font-normal text-slate-400">ชื่อผู้ใช้  : </span> <span className="font-medium ">{"Username"}</span></p>

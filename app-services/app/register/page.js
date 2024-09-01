@@ -16,7 +16,6 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: "20px",
     "& .MuiInputBase-root": {
       background: "rgb(232, 241, 250)",
       color: "#000",  // Text color
@@ -61,12 +60,12 @@ export default function SignUp() {
           </div>
 
           <form className="mt-2 " ref={form}>
-            <TextField required id="outlined-basic" label="ชื่อ" variant="outlined" name="firstname" className={classes.root}
+            <TextField required id="outlined-basic" label="ชื่อ" variant="outlined" name="firstname" className={`${classes.root} w-full mt-5`}
             />
-            <TextField required id="outlined-basic" label="นามสกุล" variant="outlined" name="lastname" className={classes.root} />
-            <TextField required id="outlined-basic" label="ชื่อผู้ใช้งาน" variant="outlined" name="username" className={classes.root}
+            <TextField required id="outlined-basic" label="นามสกุล" variant="outlined" name="lastname" className={`${classes.root} w-full mt-5`} />
+            <TextField required id="outlined-basic" label="ชื่อผู้ใช้งาน" variant="outlined" name="username" className={`${classes.root} w-full mt-5`}
             />
-            <TextField type="password" required id="outlined-basic" label="รหัสผ่าน" variant="outlined" name="password" className={classes.root} />
+            <TextField type="password" required id="outlined-basic" label="รหัสผ่าน" variant="outlined" name="password" className={`${classes.root} w-full mt-5`} />
             <Button type="submit" variant="contained" className="bg-white w-full mt-10 text-black p-3 rounded-xl hover:text-white">สมัครสมาชิก</Button>
             <Button
               onClick={() => { route.push("/login") }}

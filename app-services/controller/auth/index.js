@@ -8,3 +8,8 @@ export async function GetCookie() {
   const token = cookies().get("LoginToken");
   return token;
 }
+
+export const Logout = async () => {
+  cookies().delete('LoginToken')
+  return true
+}

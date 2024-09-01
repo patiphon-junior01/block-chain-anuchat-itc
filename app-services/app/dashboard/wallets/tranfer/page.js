@@ -17,7 +17,6 @@ import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: "0px",
     "& .MuiInputBase-root": {
       background: "rgb(232, 241, 250) !important",
       color: "#000",  // Text color
@@ -42,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 const useStyles2 = makeStyles((theme) => ({
   root: {
     width: "100%",
-    marginTop: "0px",
     background: "rgb(232, 241, 250) !important",
     "& .MuiInputBase-root": {
       background: "rgb(232, 241, 250) !important",
@@ -113,7 +111,7 @@ export default function Page() {
               <label htmlFor="name-wallet" className="text-white mb-0 text-lg">ชื่อกระเป๋า</label>
               <div>
                 <Select
-                  className={classes2.root}
+                  className={`${classes2.root} w-full mt-0`}
                   value={Wallet}
                   label=""
                   onChange={handleChange}
@@ -128,12 +126,12 @@ export default function Page() {
             <div className="mb-5">
               <label htmlFor="amount" className="text-white mb-0 text-lg">จำนวนเหรียญ</label>
               {/* เพิ่ม handle จำนวนมากสุดที่ใส่ได้ */}
-              <TextField required variant="outlined" id="amount" name="amount" type="number" step={0.00001} placeholder="จำนวนเหรียญ eg. 100" className={classes.root}
+              <TextField required variant="outlined" id="amount" name="amount" type="number" step={0.00001} placeholder="จำนวนเหรียญ eg. 100" className={`${classes.root} w-full mt-0`}
               />
             </div>
             <div className="">
               <label htmlFor="name-to" className="text-white mb-0 text-lg">โอนไปยัง</label>
-              <TextField required variant="outlined" id="name-to" name="name-to" placeholder="โอนไปยัง eg. 000xxx123cnsdc" className={classes.root}
+              <TextField required variant="outlined" id="name-to" name="name-to" placeholder="โอนไปยัง eg. 000xxx123cnsdc" className={`${classes.root} w-full mt-0`}
               />
             </div>
             <Button variant="contained" type="submit" className="bg-black w-full mt-10 text-white p-3 rounded-xl hover:text-black hover:bg-white">ยืนยัน</Button>
