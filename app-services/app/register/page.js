@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 // component import
 import LoadingPage from "@/components/loading/loading"
 
+// form-action
+import ServerAction from './Action';
+
 import { makeStyles } from '@mui/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +44,25 @@ export default function SignUp() {
   const classes = useStyles();
   const form = useRef(null);
   const route = useRouter();
+  const [loadingSub, setloadingSub] = useState(false)
 
+  const handleFunctionFrom = async (formData) => {
+    setloadingSub(true)
+    setTimeout(async () => {
+      await SubmitForm(formData);
+    }, 200)
+  }
+
+  const SubmitForm = async (formData) => {
+    const Submit = await ServerAction(formData)
+    if (Submit.status == 200) {
+      alert("สมัครสมาชิกสำเร็จ");
+      form.current?.reset();
+    } else {
+      alert(Submit?.message);
+    }
+    setloadingSub(false)
+  }
 
   return (
     <div>
@@ -59,14 +80,14 @@ export default function SignUp() {
             </Typography>
           </div>
 
-          <form className="mt-2 " ref={form}>
+          <form className="mt-2 " ref={form} action={handleFunctionFrom}>
             <TextField required id="outlined-basic" label="ชื่อ" variant="outlined" name="firstname" className={`${classes.root} w-full mt-5`}
             />
             <TextField required id="outlined-basic" label="นามสกุล" variant="outlined" name="lastname" className={`${classes.root} w-full mt-5`} />
             <TextField required id="outlined-basic" label="ชื่อผู้ใช้งาน" variant="outlined" name="username" className={`${classes.root} w-full mt-5`}
             />
             <TextField type="password" required id="outlined-basic" label="รหัสผ่าน" variant="outlined" name="password" className={`${classes.root} w-full mt-5`} />
-            <Button type="submit" variant="contained" className="bg-white w-full mt-10 text-black p-3 rounded-xl hover:text-white">สมัครสมาชิก</Button>
+            <Button type="submit" variant="contained" className="bg-white w-full mt-10 text-black p-3 rounded-xl hover:text-white" disabled={loadingSub}> {loadingSub ? "กำลังทำรายการ" : "สมัครสมาชิก"}</Button>
             <Button
               onClick={() => { route.push("/login") }}
               variant="contained" className="bg-white  mt-4 text-black p-1 px-4 rounded-xl hover:text-white">{"<-"} เข้าสู่ระบบ</Button>

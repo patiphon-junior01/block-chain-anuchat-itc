@@ -4,16 +4,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useRef } from "react";
 import { useEffect } from "react";
 
-const Page = () => {
+const Page = ({ loadingBool = false }) => {
   const animationLoading = useRef(null);
-  useEffect(() => {
-    setTimeout(() => {
-      animationLoading.current?.classList.add("active");
-    }, 2000);
-  }, []);
 
   return (
-    <div className="loading-page" ref={animationLoading}>
+    <div className={`loading-page ${loadingBool ? "active" : ''}`} ref={animationLoading}>
       <CircularProgress />
     </div>
   );

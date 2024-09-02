@@ -1,26 +1,17 @@
-"use server"
+"use server";
 
 import Axios from "../Init"; // นำเข้า Axios โดยตรง
 import { GetCookie } from "@/controller/auth/index";
 
-
-const transfer = async (data) => {
+const Account = async () => {
   const ck = await GetCookie();
-  console.log(ck?.value); // token from cookie for verify
-
+  // console.log(ck?.value); // token from cookie for verify
   try {
-    const response = await Axios.post(
-      "/api/wallet/transfer",
-      data,
-      {
-        headers: {
-          Authorization: `Bearer ${ck?.value}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    console.log("Response:", response.data);
+    const response = await Axios.get("/api/wallet/infomation-account", {
+      headers: {
+        Authorization: `Bearer ${ck?.value}`,
+      },
+    });
     return { status: true, response: response.data };
   } catch (error) {
     console.error(
@@ -58,4 +49,4 @@ const myWallet = async () => {
   }
 };
 
-export { transfer, myWallet }; // ส่งออกเป็นอ็อบเจ็กต์
+export { Account, myWallet }; // ส่งออกเป็นอ็อบเจ็กต์
