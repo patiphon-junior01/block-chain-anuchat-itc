@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import LoadingPage from "@/components/loading/loading"
 
 import { makeStyles } from '@mui/styles';
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({  
   root: {
     width: "100%",
     "& .MuiInputBase-root": {
