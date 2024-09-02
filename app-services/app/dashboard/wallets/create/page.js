@@ -43,26 +43,34 @@ export default function Page() {
   const route = useRouter();
   const [loading, setLoading] = useState(false);
 
+  const SubmitForm = async (formData) => {
+    setLoading(true);
+    setTimeout(async () => {
+      await handleFunctionFrom(formData)
+    }, 2500)
+  }
+
   const handleFunctionFrom = async (formData) => {
     try {
-      setLoading(true);
+
       let data = JSON.stringify({
         nameWallet: formData.get("name-wallet"),
       });
       const send = await createWallet(data);
-      console.log(send);
       if (send.status) {
-        alert("สำเร็จ");
+        alert(send?.response?.message);
         setTimeout(() => {
           setLoading(false);
           route.push("/dashboard/wallets"); // after success
         }, 2000);
+        return;
       }
 
       setTimeout(() => {
         alert(send?.response?.message ?? "Error Create Wallet");
         setLoading(false);
       }, 2000);
+
     } catch (err) {
       console.error(err);
       setTimeout(() => {
@@ -92,7 +100,7 @@ export default function Page() {
             </Typography>
           </div>
 
-          <form className="mt-2 " ref={form} action={handleFunctionFrom}>
+          <form className="mt-2 " ref={form} action={SubmitForm}>
             <div>
               <label htmlFor="name-wallet" className="text-white mb-0 text-lg">
                 ชื่อกระเป๋า

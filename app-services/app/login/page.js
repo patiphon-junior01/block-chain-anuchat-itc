@@ -44,16 +44,25 @@ export default function Page() {
   const form = useRef(null);
   const route = useRouter();
   const [loadingSub, setloadingSub] = useState(false)
+
+
   const handleFunctionFrom = async (formData) => {
-    // console.log(formData.get("username")) // get data
+    setloadingSub(true)
+    setTimeout(async () => {
+      await SubmitForm(formData);
+    }, 200)
+  }
+
+  const SubmitForm = async (formData) => {
     const Submit = await ServerAction(formData)
     if (Submit.status == 200) {
       route.push("/dashboard")
       alert("ล๊อกอินสำเร็จ");
-      return;
+      form.current?.reset();
     } else {
       alert(Submit?.message);
     }
+    setloadingSub(false)
   }
 
   return (
@@ -76,7 +85,7 @@ export default function Page() {
             <TextField required id="outlined-basic" label="ชื่อผู้ใช้งาน" variant="outlined" name="username" className={`${classes.root} w-full mt-5`}
             />
             <TextField required id="outlined-basic" label="รหัสผ่าน" variant="outlined" name="password" type="password" className={`${classes.root} w-full mt-5`} />
-            <Button variant="contained" type="submit" className="bg-white w-full mt-10 text-black p-3 rounded-xl hover:text-white" disabled={loadingSub}>เข้าสู่ระบบ</Button>
+            <Button variant="contained" type="submit" className="bg-white w-full mt-10 text-black p-3 rounded-xl hover:text-white" disabled={loadingSub}>{loadingSub ? "กำลังทำรายการ" : "เข้าสู่ระบบ"}</Button>
             <Button
               onClick={() => { route.push("/register") }}
               variant="contained" className="bg-white w-full mt-4 text-black p-3 rounded-xl hover:text-white">สมัครสมาชิก</Button>

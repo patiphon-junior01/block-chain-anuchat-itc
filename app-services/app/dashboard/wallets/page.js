@@ -11,7 +11,8 @@ import { myWallet, Account } from "@/plugin/API/route/showWallet";
 import { useState, useEffect } from "react";
 
 // component import
-import LoadingPage from "@/components/loading/loading";
+import LoadingPage from "@/components/loading/loading2";
+
 export default function Page() {
   const route = useRouter();
   const [dataToken, setdataToken] = useState({
@@ -19,13 +20,20 @@ export default function Page() {
     TokenITC: 0.0,
   });
   const [WalletArr, setWalletArr] = useState([]);
+  const [loadingGetData, SetloadingGetData] = useState(false)
 
   const fetchWalletData = async () => {
-    const result = await myWallet();
-    const resultAcount = await Account();
-    if (result.status && resultAcount.status) {
-      setWalletArr(result?.response.wallet);
-      setdataToken(resultAcount?.response.balance);
+    try {
+      const result = await myWallet();
+      const resultAcount = await Account();
+      if (result.status && resultAcount.status) {
+        setWalletArr(result?.response.wallet);
+        setdataToken(resultAcount?.response.balance);
+      }
+      SetloadingGetData(true)
+    } catch (err) {
+      console.log(err)
+      SetloadingGetData(true)
     }
   };
 
@@ -35,7 +43,7 @@ export default function Page() {
 
   return (
     <div>
-      <LoadingPage />
+      <LoadingPage loadingBool={loadingGetData} />
       <div className="container-is-main">
         <div className="py-10 px-4 pb-20">
           <div className="flex justify-between items-center mb-10">
@@ -60,6 +68,13 @@ export default function Page() {
               <span className="font-medium ms-1">{dataToken?.TokenITC}</span>
             </p>
           </div>
+
+
+          {WalletArr.length == 0 && (
+            <div className="flex  gap-5 justify-center  mb-20">
+              <div className="text-white text-xl">No data</div>
+            </div>
+          )}
 
           {/* wallets list */}
           <div className="flex flex-wrap gap-5 justify-between  mb-20">
@@ -115,6 +130,8 @@ export default function Page() {
             })}
           </div>
           {/* wallets list */}
+
+
 
           <div className="bottom-menu p-4 lg:p-3 px-1 bg-white rounded-3xl w-10/12 ">
             <div

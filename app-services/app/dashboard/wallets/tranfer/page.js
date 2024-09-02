@@ -9,11 +9,11 @@ import { useSearchParams } from "next/navigation";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { Button } from "@mui/material";
-import API from "../../../../plugin/API/API";
+import { myWallet, transfer } from "@/plugin/API/route/getExample";
 import { Alert } from "@mui/material";
 
 // component import
-import LoadingPage from "@/components/loading/loading";
+import LoadingPage from "@/components/loading/loading2";
 
 import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles((theme) => ({
@@ -74,65 +74,85 @@ export default function Page() {
 
   // state data
   const [bag, setBag] = React.useState("");
-  const [amount, setAmount] = React.useState("");
+  const [amount, setAmount] = React.useState(0.00001);
   const [to, setTo] = React.useState("");
   const [wallets, setWallets] = React.useState([]);
   const [userData, setUserData] = React.useState(null);
   const [error, setError] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
+  const [loadingWallet, setloadingWallet] = React.useState(false);
 
-  const handleChange = (event) => {
-    setWallet(event.target.value);
-  };
 
   React.useEffect(() => {
     fetchWalletData();
+    const walletId = searchParams.get('walletId')
+    if (walletId) {
+      setBag(walletId)
+    }
   }, []);
 
   const fetchWalletData = async () => {
     setLoading(true);
     setError(null);
     try {
-      const result = await API.getExample.myWallet();
+      const result = await myWallet();
       if (result.status) {
         setWallets(result.response.wallet);
         setUserData(result.response.user_data);
       } else {
         setError("Failed to fetch wallet data");
       }
+      setloadingWallet(true)
     } catch (error) {
       console.error("Error fetching wallet data:", error);
       setError(
         "An error occurred while fetching wallet data. Please try again."
       );
+      setloadingWallet(true)
     } finally {
+      setloadingWallet(true)
       setLoading(false);
     }
   };
 
   const handleTransfer = async () => {
+
+    // validate fields
+    if (!to || !amount || !bag) {
+      setError("Please Enter Value");
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
-      const result = await API.getExample.transfer({
+      const result = await transfer({
         to,
         amount,
         id_wallet: bag,
       });
+
+      console.log(result)
+
       if (result.status) {
         console.log("Transfer successful:", result.response);
         // Show success message
         alert("Transfer successful!");
         // Refresh wallet data
-        fetchWalletData();
       } else {
-        setError("Transfer failed. Please try again.");
+        setError(result?.response?.message ?? "Transfer error");
       }
+      setTo(null)
+      setAmount(null)
     } catch (error) {
       console.error("Transfer error:", error);
       setError("An error occurred during transfer. Please try again.");
+      setTo(null)
+      setAmount(null)
     } finally {
-      setLoading(false);
+      setTo(null)
+      setAmount(null)
+      form?.current?.reset();
     }
   };
 
@@ -143,10 +163,10 @@ export default function Page() {
 
   return (
     <div>
-      <LoadingPage />
+      <LoadingPage loadingBool={loadingWallet} />
       <div className="container-is-main">
         <div className="py-10 px-4">
-          {error && <Alert severity="error">{error}</Alert>}
+          {error && <Alert severity="error" className="mb-3">{error}</Alert>}
           <div className="flex justify-between items-center ">
             <Avatar
               alt={userData?.username || "User"}
@@ -177,11 +197,13 @@ export default function Page() {
                   name="name-wallet"
                   disabled={loading}
                 >
+                  <MenuItem value="" disabled>**โปรดเลือกรายการ**</MenuItem>
                   {wallets.map((wallet) => (
                     <MenuItem
                       key={wallet.id_wallet}
                       value={wallet.id_wallet}
-                    >{`${wallet.name_wallet}`}</MenuItem>
+                      disabled={wallet?.ITC <= 0.00000}
+                    >{`${wallet.name_wallet}`} {`ITC : ${wallet?.ITC}`}</MenuItem>
                   ))}
                 </Select>
               </div>
@@ -228,7 +250,7 @@ export default function Page() {
               onClick={handleTransfer}
               disabled={loading}
             >
-              ยืนยัน
+              {loading ? "กำลังทำรายการ" : "ยืนยัน"}
             </Button>
             <Button
               onClick={() => {

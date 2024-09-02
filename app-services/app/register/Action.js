@@ -1,12 +1,8 @@
 'use server'
-
-import { cookies } from 'next/headers'
 import 'dotenv/config'
 
-const baseUrl = process.env.BASEURL || '';
-
+const baseUrl = process.env.BASEURL;
 const ServerAction = async (formData) => {
-  debugger
   try {
     // ตรวจสอบว่า formData มีข้อมูลครบถ้วนหรือไม่
     const username = formData.get("username");
@@ -32,8 +28,7 @@ const ServerAction = async (formData) => {
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
-      body: raw,
-      redirect: "follow"
+      body: raw
     };
 
     // ส่งคำขอไปยัง API
@@ -42,16 +37,6 @@ const ServerAction = async (formData) => {
 
     // ตรวจสอบสถานะการตอบกลับจาก API
     if (res.ok) {
-      // เก็บโทเค็นลงในคุกกี้ถ้าการสมัครสมาชิกสำเร็จ
-      cookies().set({
-        name: 'LoginToken',
-        value: res_data.token,
-        maxAge: 24 * 60 * 60, // 1 วัน
-        httpOnly: true,
-        path: '/',
-        expires: new Date(Date.now() + 60 * 60 * 24 * 1000) // ตั้งค่าอายุการใช้งานคุกกี้เป็น 1 วัน
-      });
-
       return { message: 'สมัครสมาชิกสำเร็จ', status: 200 };
     } else {
       // ส่งคืนข้อความผิดพลาดจาก API ถ้าการสมัครสมาชิกไม่สำเร็จ

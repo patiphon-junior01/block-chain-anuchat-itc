@@ -6,14 +6,12 @@ import { GetCookie } from "@/controller/auth/index";
 const Account = async () => {
   const ck = await GetCookie();
   // console.log(ck?.value); // token from cookie for verify
-
   try {
     const response = await Axios.get("/api/wallet/infomation-account", {
       headers: {
         Authorization: `Bearer ${ck?.value}`,
       },
     });
-    console.log("Response:", response.data);
     return { status: true, response: response.data };
   } catch (error) {
     console.error(
@@ -26,6 +24,7 @@ const Account = async () => {
     };
   }
 };
+
 const myWallet = async () => {
   const ck = await GetCookie();
   // console.log(ck?.value); // token from cookie for verify

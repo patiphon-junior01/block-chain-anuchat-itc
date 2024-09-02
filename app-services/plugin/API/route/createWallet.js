@@ -9,7 +9,7 @@ const createWallet = async (data) => {
   try {
     const response = await Axios.post(
       "/api/wallet/create-wallet",
-      data, // ข้อมูลที่คุณส่งไปยัง API
+      data,
       {
         headers: {
           Authorization: `Bearer ${ck?.value}`,
